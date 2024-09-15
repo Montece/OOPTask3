@@ -2,9 +2,21 @@
 
 namespace OOPTask3.Console.Commands;
 
-internal abstract class ConsoleCommand : IConsoleCommand
+public abstract class ConsoleCommand : IConsoleCommand
 {
-    public abstract bool IsMatch(string input);
+    private string? _shortcutNumber = null;
+
+    protected ConsoleCommand(int? shortcutNumber = null)
+    {
+        _shortcutNumber = shortcutNumber?.ToString();
+    }
+
+    public bool IsMatch(string input)
+    {
+        return !string.IsNullOrEmpty(_shortcutNumber) && _shortcutNumber.Equals(input) || IsMatchInternal(input);
+    }
+
+    protected abstract bool IsMatchInternal(string input);
 
     public void Execute(ConsoleLayoutContext context, string input)
     {

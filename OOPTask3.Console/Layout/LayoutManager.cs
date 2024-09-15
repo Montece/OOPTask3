@@ -4,11 +4,17 @@ public sealed class LayoutManager
 {
     public ConsoleLayout CurrentLayout { get; private set; }
 
-    private readonly ConsoleLayout[] _layouts =
-    [
-        new MenuLayout(),
-        new GameLayout(),
-    ];
+    private readonly ConsoleLayout[] _layouts;
+
+    public LayoutManager()
+    {
+        _layouts =
+        [
+            new MenuLayout(this),
+            new AboutLayout(this),
+            new GameLayout(this),
+        ];
+    }
 
     public void ShowLayout(string id)
     {
@@ -22,6 +28,11 @@ public sealed class LayoutManager
         if (layout == null)
         {
             return;
+        }
+
+        if (CurrentLayout != null)
+        {
+            CurrentLayout.Hide();
         }
 
         CurrentLayout = layout;

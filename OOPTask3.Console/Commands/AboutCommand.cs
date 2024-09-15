@@ -2,20 +2,23 @@
 
 namespace OOPTask3.Console.Commands;
 
-public sealed class StartGameCommand : SimpleConsoleCommand
+public sealed class AboutCommand : SimpleConsoleCommand
 {
-    public StartGameCommand(int? shortcutNumber = null) : base(shortcutNumber)
+    public AboutCommand()
+    {
+    }
+
+    public AboutCommand(int? shortcutNumber) : base(shortcutNumber)
     {
     }
 
     protected override string[] _inputVarieties { get; } =
     [
-        "start",
-        "start game"
+        "about"
     ];
 
     protected override void ExecuteInternal(ConsoleLayoutContext context, string input)
     {
-        context.ConsoleLayout.LayoutManager.ShowLayout("Game");
+        context.ConsoleLayout.LayoutManager.ShowLayout("About");
     }
 }

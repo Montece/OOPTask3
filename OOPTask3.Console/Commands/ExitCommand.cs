@@ -2,13 +2,13 @@
 
 namespace OOPTask3.Console.Commands;
 
-internal sealed class ExitCommand : SimpleConsoleCommand
+public sealed class ExitCommand : SimpleConsoleCommand
 {
-    public ExitCommand() : base()
+    public ExitCommand()
     {
     }
 
-    public ExitCommand(uint shortcutNumber) : base(shortcutNumber)
+    public ExitCommand(int shortcutNumber) : base(shortcutNumber)
     {
     }
 

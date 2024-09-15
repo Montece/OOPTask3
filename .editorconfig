@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CyrillicString: String contains cyrillic symbols
+dotnet_diagnostic.CyrillicString.severity = none

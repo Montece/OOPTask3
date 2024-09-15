@@ -1,3 +1,6 @@
 ﻿namespace OOPTask3.Console.Layout.Context;
 
-public abstract class ConsoleLayoutContext;
+public class ConsoleLayoutContext
+{
+    public ConsoleLayout ConsoleLayout { get; set; }
+}

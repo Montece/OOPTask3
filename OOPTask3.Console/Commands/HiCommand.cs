@@ -2,7 +2,7 @@
 
 namespace OOPTask3.Console.Commands;
 
-internal sealed class HiCommand : SimpleConsoleCommand
+public sealed class HiCommand : SimpleConsoleCommand
 {
     protected override string[] _inputVarieties { get; } =
     [

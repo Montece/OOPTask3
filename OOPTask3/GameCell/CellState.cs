@@ -1,4 +1,4 @@
-﻿namespace OOPTask3;
+﻿namespace OOPTask3.GameCell;
 
 public enum CellState
 {
