@@ -43,7 +43,7 @@ public class Map2dTests
     {
         Assert.Throws<ArgumentOutOfRangeException>(() =>
         {
-            var map = new Map2d<Cell>(width, height);
+            var _ = new Map2d<Cell>(width, height);
         });
     }
 
@@ -58,6 +58,11 @@ public class Map2dTests
         map.SetElement(new(5, 5), cell);
 
         cell = map.GetElement(new(5, 5));
+
+        if (cell is null)
+        {
+            Assert.Fail("Cell is null!");
+        }
 
         Assert.Equal(number, cell.Number);
     }

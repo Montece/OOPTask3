@@ -12,7 +12,7 @@ public sealed class RestartGameCommand : SimpleConsoleCommand
     {
     }
 
-    protected override string[] _inputVarieties { get; } =
+    protected override string[] InputVarieties { get; } =
     [
         "restart",
         "restart game",
@@ -20,11 +20,6 @@ public sealed class RestartGameCommand : SimpleConsoleCommand
 
     protected override void ExecuteInternal(ConsoleLayoutContext context, string input)
     {
-        if (context is GameLayoutContext gameContext)
-        {
-            gameContext.GameLogic = null;
-        }
-        
-        context.ConsoleLayout.LayoutManager.ShowLayout("Game");
+        context.ConsoleLayout?.LayoutManager.ShowLayout("Game");
     }
 }

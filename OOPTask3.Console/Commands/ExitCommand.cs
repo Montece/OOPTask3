@@ -12,7 +12,7 @@ public sealed class ExitCommand : SimpleConsoleCommand
     {
     }
 
-    protected override string[] _inputVarieties { get; } = 
+    protected override string[] InputVarieties { get; } = 
     [
         "exit",
         "quit",

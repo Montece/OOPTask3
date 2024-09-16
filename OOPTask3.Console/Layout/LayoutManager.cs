@@ -2,7 +2,7 @@
 
 public sealed class LayoutManager
 {
-    public ConsoleLayout CurrentLayout { get; private set; }
+    private ConsoleLayout? CurrentLayout { get; set; }
 
     private readonly ConsoleLayout[] _layouts;
 
@@ -23,30 +23,29 @@ public sealed class LayoutManager
             return;
         }
 
-        var layout = _layouts.FirstOrDefault(l => l.ID.Equals(id));
+        var layout = _layouts.FirstOrDefault(l => l.Id.Equals(id));
 
         if (layout == null)
         {
             return;
         }
 
-        if (CurrentLayout != null)
-        {
-            CurrentLayout.Hide();
-        }
+        CurrentLayout?.Hide();
 
         CurrentLayout = layout;
 
         CurrentLayout.Show();
     }
 
-    public void ProvideInput(string input)
+    public bool ProvideInput(string input)
     {
         if (CurrentLayout == null || string.IsNullOrEmpty(input))
         {
-            return;
+            return false;
         }
         
-        CurrentLayout.ProvideInput(input);
+        var provideInputResult = CurrentLayout.ProvideInput(input);
+
+        return provideInputResult;
     }
 }

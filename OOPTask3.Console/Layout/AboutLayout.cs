@@ -5,9 +5,10 @@ namespace OOPTask3.Console.Layout;
 
 public sealed class AboutLayout : ConsoleLayout
 {
-    public override string ID => "About";
-    public override ConsoleLayoutContext Context { get; } = new ConsoleLayoutContext();
-    public override ConsoleCommandsManager CommandsManager { get; } = new(
+    public override string Id => "About";
+    protected override ConsoleLayoutContext Context { get; } = new ConsoleLayoutContext();
+
+    protected override ConsoleCommandsManager CommandsManager { get; } = new(
     [
         new MenuCommand(BACK_SHORTCUT),
     ]);
@@ -29,8 +30,8 @@ public sealed class AboutLayout : ConsoleLayout
     {
     }
 
-    protected override void ProvideInputImpl(string input)
+    protected override bool ProvideInputImpl(string input)
     {
-        
+        return false;
     }
 }

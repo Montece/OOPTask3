@@ -1,8 +1,6 @@
-﻿using System.Windows;
+﻿namespace OOPTask3.WPF;
 
-namespace OOPTask3.WPF;
-
-public partial class MainWindow : Window
+public sealed partial class MainWindow
 {
     public MainWindow()
     {

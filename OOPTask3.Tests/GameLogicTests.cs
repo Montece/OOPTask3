@@ -2,7 +2,7 @@
 
 namespace OOPTask3.Tests;
 
-public class GameLogicTests
+public sealed class GameLogicTests
 {
     [Fact]
     public void GameLogic_Ctor_InitialState_Width()
@@ -88,10 +88,22 @@ public class GameLogicTests
         var gameLogic = new GameLogic();
         gameLogic.Start(10, 15, maxBombsCount);
 
+        var cells = gameLogic.GetCells();
+
+        if (cells is null)
+        {
+            Assert.Fail("Cells are null!");
+        }
+
         var bombsCount = 0;
 
-        foreach (var cell in gameLogic.GetCells())
+        foreach (var cell in cells)
         {
+            if (cell is null)
+            {
+                continue;
+            }
+
             bombsCount += cell.HasBomb ? 1 : 0;
         }
 
@@ -119,6 +131,11 @@ public class GameLogicTests
         gameLogic.Start(10, 15, 20);
 
         var cells = gameLogic.GetCells();
+
+        if (cells is null)
+        {
+            Assert.Fail("Cells are null!");
+        }
 
         foreach (var cell in cells)
         {

@@ -82,7 +82,7 @@ public sealed class Map2d<T>
             Direction.LowerRight => GetElement(new(position.X + 1, position.Y - 1)),
             Direction.UpperLeft => GetElement(new(position.X - 1, position.Y + 1)),
             Direction.LowerLeft => GetElement(new(position.X - 1, position.Y - 1)),
-            _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
+            var _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
         };
 
         return cell;

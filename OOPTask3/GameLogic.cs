@@ -10,7 +10,7 @@ public sealed class GameLogic
     public int Height { get; private set; }
     public int MaxBombsCount => Width * Height;
 
-    private Map2d<Cell>? _cellsMap = null;
+    private Map2d<Cell>? _cellsMap;
     private Random _random = new();
 
     public void Start(int width, int height, int bombsCount)
@@ -52,6 +52,11 @@ public sealed class GameLogic
 
     private void PlaceBombs(int bombsCount)
     {
+        if (_cellsMap is null)
+        {
+            return;
+        }
+
         var currentBombsCount = bombsCount;
 
         if (currentBombsCount > MaxBombsCount)
@@ -72,22 +77,33 @@ public sealed class GameLogic
         while (currentBombsCount  > 0 && availablePositions.Count > 0)
         {
             var bombPosition = availablePositions[_random.Next(0, availablePositions.Count)];
-            _cellsMap.GetElement(bombPosition).PlaceBomb();
 
-            currentBombsCount--;
+            var cell = _cellsMap.GetElement(bombPosition);
+
+            if (cell is not null)
+            {
+                cell.PlaceBomb();
+                currentBombsCount--;
+            }
+
             availablePositions.Remove(bombPosition);
         }
     }
 
     private void CalculateNumbers()
     {
+        if (_cellsMap is null)
+        {
+            return;
+        }
+
         for (var x = 0; x < Width; x++)
         {
             for (var y = 0; y < Height; y++)
             {
                 var cell = _cellsMap.GetElement(new(x, y));
 
-                if (cell.HasBomb)
+                if (cell is null || cell.HasBomb)
                 {
                     continue;
                 }
@@ -111,7 +127,7 @@ public sealed class GameLogic
 
     public void ChangeCellState(Point position)
     {
-        if (State != GameState.Running)
+        if (State != GameState.Running || _cellsMap is null)
         {
             return;
         }
@@ -143,7 +159,7 @@ public sealed class GameLogic
 
     public void OpenCell(Point position)
     {
-        if (State != GameState.Running)
+        if (State != GameState.Running || _cellsMap is null)
         {
             return;
         }

@@ -8,7 +8,7 @@ public sealed class StartGameCommand : SimpleConsoleCommand
     {
     }
 
-    protected override string[] _inputVarieties { get; } =
+    protected override string[] InputVarieties { get; } =
     [
         "start",
         "start game"
@@ -16,6 +16,6 @@ public sealed class StartGameCommand : SimpleConsoleCommand
 
     protected override void ExecuteInternal(ConsoleLayoutContext context, string input)
     {
-        context.ConsoleLayout.LayoutManager.ShowLayout("Game");
+        context.ConsoleLayout?.LayoutManager.ShowLayout("Game");
     }
 }

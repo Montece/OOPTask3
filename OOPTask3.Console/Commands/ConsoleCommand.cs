@@ -4,7 +4,7 @@ namespace OOPTask3.Console.Commands;
 
 public abstract class ConsoleCommand : IConsoleCommand
 {
-    private string? _shortcutNumber = null;
+    private readonly string? _shortcutNumber;
 
     protected ConsoleCommand(int? shortcutNumber = null)
     {

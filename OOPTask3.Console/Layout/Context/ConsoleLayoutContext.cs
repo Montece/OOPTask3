@@ -2,5 +2,5 @@
 
 public class ConsoleLayoutContext
 {
-    public ConsoleLayout ConsoleLayout { get; set; }
+    public ConsoleLayout? ConsoleLayout { get; set; }
 }

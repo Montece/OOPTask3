@@ -1,14 +1,13 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using OOPTask3.Console.Commands;
+﻿using OOPTask3.Console.Commands;
 using OOPTask3.Console.Layout.Context;
 
 namespace OOPTask3.Console.Layout;
 
 public abstract class ConsoleLayout
 {
-    public abstract string ID { get; }
-    public abstract ConsoleLayoutContext Context { get; }
-    public abstract ConsoleCommandsManager CommandsManager { get; }
+    public abstract string Id { get; }
+    protected abstract ConsoleLayoutContext Context { get; }
+    protected abstract ConsoleCommandsManager CommandsManager { get; }
     public LayoutManager LayoutManager { get; }
 
     private const string TITLE = "=== Minesweeper ===";
@@ -34,20 +33,24 @@ public abstract class ConsoleLayout
 
     protected abstract void HideImpl();
 
-    public void ProvideInput(string input)
+    public bool ProvideInput(string input)
     {
-        if (Context != null)
-        {
-            Context.ConsoleLayout = this;
-        }
+        Context.ConsoleLayout = this;
 
         var executeResult = CommandsManager.TryExecute(Context, input);
 
         if (!executeResult)
         {
-            ProvideInputImpl(input);
+            var provideInputResult = ProvideInputImpl(input);
+
+            if (!provideInputResult)
+            {
+                return false;
+            }
         }
+
+        return true;
     }
 
-    protected abstract void ProvideInputImpl(string input);
+    protected abstract bool ProvideInputImpl(string input);
 }

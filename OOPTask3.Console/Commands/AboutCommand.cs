@@ -12,13 +12,18 @@ public sealed class AboutCommand : SimpleConsoleCommand
     {
     }
 
-    protected override string[] _inputVarieties { get; } =
+    protected override string[] InputVarieties { get; } =
     [
         "about"
     ];
 
     protected override void ExecuteInternal(ConsoleLayoutContext context, string input)
     {
+        if (context.ConsoleLayout is null)
+        {
+            return;
+        }
+
         context.ConsoleLayout.LayoutManager.ShowLayout("About");
     }
 }

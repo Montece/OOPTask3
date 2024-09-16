@@ -6,9 +6,10 @@ namespace OOPTask3.Console.Layout;
 
 public sealed class GameLayout : ConsoleLayout
 {
-    public override string ID => "Game";
-    public override ConsoleLayoutContext Context { get; } = new GameLayoutContext();
-    public override ConsoleCommandsManager CommandsManager { get; } = new(
+    public override string Id => "Game";
+    protected override ConsoleLayoutContext Context { get; } = new GameLayoutContext();
+
+    protected override ConsoleCommandsManager CommandsManager { get; } = new(
     [
         new OpenCellCommand(),
         new ToggleCellCommand(),
@@ -19,7 +20,7 @@ public sealed class GameLayout : ConsoleLayout
     private const int RESTART_GAME_SHORTCUT = 1;
     private const int MENU_SHORTCUT = 2;
 
-    private GameLogic _gameLogic;
+    private GameLogic? _gameLogic;
 
     public GameLayout(LayoutManager layoutManager) : base(layoutManager)
     {
@@ -89,7 +90,7 @@ public sealed class GameLayout : ConsoleLayout
             throw new WrongContextException();
         }
 
-        gameContext.GameLogic = new GameLogic();
+        gameContext.GameLogic = new();
         _gameLogic = gameContext.GameLogic;
 
         gameContext.GameLogic.Start(10, 10, 20);
@@ -135,8 +136,13 @@ public sealed class GameLayout : ConsoleLayout
         }
     }
 
-    private static char GetCellSymbol(Cell cell)
+    private static char GetCellSymbol(Cell? cell)
     {
+        if (cell is null)
+        {
+            return ' ';
+        }
+
         switch (cell.State)
         {
             case CellState.Clear:
@@ -157,8 +163,8 @@ public sealed class GameLayout : ConsoleLayout
         }
     }
 
-    protected override void ProvideInputImpl(string input)
+    protected override bool ProvideInputImpl(string input)
     {
-        
+        return false;
     }
 }

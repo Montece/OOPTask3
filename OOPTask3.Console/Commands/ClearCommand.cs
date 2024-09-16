@@ -4,7 +4,7 @@ namespace OOPTask3.Console.Commands;
 
 public sealed class ClearCommand : SimpleConsoleCommand
 {
-    protected override string[] _inputVarieties { get; } =
+    protected override string[] InputVarieties { get; } =
     [
         "clear"
     ];

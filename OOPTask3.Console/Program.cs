@@ -1,5 +1,4 @@
-﻿using OOPTask3.Console.Commands;
-using OOPTask3.Console.Layout;
+﻿using OOPTask3.Console.Layout;
 
 Console.Title = "OOPTask3";
 
@@ -17,7 +16,20 @@ while (isExecuting)
         continue;
     }
 
-    layoutManager.ProvideInput(input);
+    var provideInputResult = layoutManager.ProvideInput(input);
+
+    if (!provideInputResult)
+    {
+        switch (input)
+        {
+            case "force exit":
+                isExecuting = false;
+                break;
+            default:
+                Console.WriteLine("Unknown command.");
+                break;
+        }
+    }
 }
 
 Console.WriteLine("Press ENTER to exit...");
