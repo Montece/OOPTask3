@@ -130,6 +130,4 @@ public class GameLogicTests
 
         Assert.Equal(gameLogic.Width * gameLogic.Height, cells.Length);
     }
-
-    public void 
 }
