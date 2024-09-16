@@ -35,9 +35,5 @@ public sealed class MenuLayout : ConsoleLayout
 
     protected override void ProvideInputImpl(string input)
     {
-        switch (input)
-        {
-
-        }
     }
 }

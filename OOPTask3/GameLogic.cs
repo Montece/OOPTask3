@@ -13,13 +13,25 @@ public sealed class GameLogic
     private Map2d<Cell>? _cellsMap = null;
     private Random _random = new();
 
-    public void Start(int width, int height)
+    public void Start(int width, int height, int bombsCount)
     {
+        if (bombsCount < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(bombsCount), "Cannot be less then 0");
+        }
+
         Width = width;
         Height = height;
 
+        if (bombsCount > MaxBombsCount)
+        {
+            Width = 0;
+            Height = 0;
+            throw new ArgumentOutOfRangeException(nameof(bombsCount), "Cannot be more then cells count");
+        }
+
         InitializeMap();
-        PlaceBombs(20);
+        PlaceBombs(bombsCount);
         CalculateNumbers();
 
         State = GameState.Running;
@@ -125,7 +137,7 @@ public sealed class GameLogic
             case CellState.Opened:
                 break;
             default:
-                break;
+                throw new ArgumentOutOfRangeException(nameof(cell.State), cell.State, null);
         }
     }
 
@@ -151,14 +163,31 @@ public sealed class GameLogic
         }
         else
         {
-            //var areBombsLeft = _cellsMap.GetCells().Where();
+            //var areBombsLeft = _cellsMap.GetElements().Where();
         }
     }
 
-    public Cell GetCell(Point position)
+    public Cell? GetCell(Point position)
     {
+        if (State != GameState.Running || _cellsMap == null)
+        {
+            return default;
+        }
+
         var cell = _cellsMap.GetElement(position);
 
         return cell;
+    }
+
+    public Cell?[]? GetCells()
+    {
+        if (State != GameState.Running || _cellsMap == null)
+        {
+            return default;
+        }
+
+        var cells = _cellsMap.GetElements();
+
+        return cells;
     }
 }

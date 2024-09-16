@@ -7,7 +7,7 @@ public sealed class Map2d<T>
     public int Width { get; }
     public int Height { get; }
 
-    private readonly T[] _elements;
+    private readonly T?[] _elements;
 
     public Map2d(int width, int height)
     {
@@ -33,7 +33,7 @@ public sealed class Map2d<T>
 
         Width = width;
         Height = height;
-        _elements = new T[width * height];
+        _elements = new T?[width * height];
     }
 
     public T? GetElement(Point position)
@@ -51,7 +51,7 @@ public sealed class Map2d<T>
         return _elements[position.X + position.Y * Width];
     }
 
-    public T[] GetCells()
+    public T?[] GetElements()
     {
         return _elements;
     }

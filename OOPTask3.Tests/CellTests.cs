@@ -47,8 +47,6 @@ public class CellTests
                 Assert.Fail($"Cannot change cell state: {oldState} -> {newState}");
             }
         }
-
-        Assert.True(true);
     }
 
     [Fact]
@@ -67,7 +65,5 @@ public class CellTests
                 Assert.Fail($"Cannot change cell number: {oldState} -> {newState}");
             }
         }
-
-        Assert.True(true);
     }
 }

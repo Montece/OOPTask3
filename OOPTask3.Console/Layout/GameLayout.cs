@@ -92,7 +92,7 @@ public sealed class GameLayout : ConsoleLayout
         gameContext.GameLogic = new GameLogic();
         _gameLogic = gameContext.GameLogic;
 
-        gameContext.GameLogic.Start(10, 10);
+        gameContext.GameLogic.Start(10, 10, 20);
     }
 
     private void RenderMap()
@@ -101,38 +101,6 @@ public sealed class GameLayout : ConsoleLayout
         {
             return;
         }
-
-        /*for (var x = -1; x < _gameLogic.Width; x++)
-        {
-            for (var y = -1; y < _gameLogic.Height; y++)
-            {
-                if (x == -1)
-                {
-                    if (y == -1)
-                    {
-                        System.Console.Write(" ");
-                    }
-                    else
-                    {
-                        System.Console.Write(y);
-                    }
-                }
-                else
-                {
-                    if (y == -1)
-                    {
-                        System.Console.Write(x);
-                    }
-                    else
-                    {
-                        var symbol = GetCellSymbol(_gameLogic.GetCell(new(x, y)));
-                        System.Console.Write(symbol);
-                    }
-                }
-            }
-
-            System.Console.WriteLine();
-        }*/
 
         for (var y = _gameLogic.Height - 1; y >= -1; y--)
         {
