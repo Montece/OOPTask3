@@ -1,6 +1,9 @@
 ﻿using OOPTask3.Console.Commands;
 using OOPTask3.Console.Layout.Context;
-using OOPTask3.GameCell;
+using OOPTask3.Game;
+using OOPTask3.Game.Cells;
+using OOPTask3.Game.Cells.States;
+using OOPTask3.Game.States;
 
 namespace OOPTask3.Console.Layout;
 
@@ -143,7 +146,7 @@ public sealed class GameLayout : ConsoleLayout
             return ' ';
         }
 
-        switch (cell.State)
+        switch (cell)
         {
             case CellState.Clear:
                 return '#';

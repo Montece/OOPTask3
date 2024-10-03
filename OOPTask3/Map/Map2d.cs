@@ -2,12 +2,12 @@
 
 namespace OOPTask3.Map;
 
-public sealed class Map2d<T>
+public sealed class Map2d<T> where T : new()
 {
     public int Width { get; }
     public int Height { get; }
 
-    private readonly T?[] _elements;
+    private readonly T[] _elements;
 
     public Map2d(int width, int height)
     {
@@ -33,7 +33,16 @@ public sealed class Map2d<T>
 
         Width = width;
         Height = height;
-        _elements = new T?[width * height];
+
+        _elements = new T[width * height];
+
+        for (var y = 0; y < Height; y++)
+        {
+            for (var x = 0; x < Width; x++)
+            {
+                SetElement(new(x, y), new T());
+            }
+        }
     }
 
     public T? GetElement(Point position)
@@ -51,7 +60,7 @@ public sealed class Map2d<T>
         return _elements[position.X + position.Y * Width];
     }
 
-    public T?[] GetElements()
+    public T[] GetElements()
     {
         return _elements;
     }
@@ -62,14 +71,12 @@ public sealed class Map2d<T>
     }
 
     [Pure]
-    [MustUseReturnValue]
     private int PositionToIndex(Point position)
     {
         return position.X + position.Y * Width;
     }
 
     [Pure]
-    [MustUseReturnValue]
     public T? GetElementNeighbour(Point position, Direction direction)
     {
         var cell = direction switch

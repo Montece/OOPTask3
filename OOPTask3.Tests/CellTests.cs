@@ -1,4 +1,4 @@
-﻿using OOPTask3.GameCell;
+﻿using OOPTask3.Game.Cells;
 using Xunit;
 
 namespace OOPTask3.Tests;
