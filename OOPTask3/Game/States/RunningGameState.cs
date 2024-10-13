@@ -1,5 +1,4 @@
 ﻿using OOPTask3.Game.Cells;
-using OOPTask3.Game.Cells.States;
 using OOPTask3.Map;
 using OOPTask3.Random;
 using OOPTask3.StateMachine;
@@ -20,7 +19,7 @@ public sealed class RunningGameState : GameState
     public int Height { get; private set; }
     public int MaxBombsCount => Width * Height;
 
-    private readonly Map2d<Cell> _cellsMap;
+    private readonly CellsMap _cellsMap;
     private readonly IRandomGenerator _randomGenerator;
 
     public RunningGameState(int width, int height, int bombsCount, IRandomGenerator randomGenerator)
@@ -64,7 +63,6 @@ public sealed class RunningGameState : GameState
         _cellsMap = new(Width, Height);
 
         PlaceBombs(bombsCount);
-        CalculateNumbers();
     }
 
     private void PlaceBombs(int bombsCount)
@@ -103,35 +101,6 @@ public sealed class RunningGameState : GameState
             }
 
             availablePositions.Remove(bombPosition);
-        }
-    }
-
-    private void CalculateNumbers()
-    {
-        for (var x = 0; x < Width; x++)
-        {
-            for (var y = 0; y < Height; y++)
-            {
-                var cell = _cellsMap.GetElement(new(x, y));
-
-                if (cell is null || cell.HasBomb)
-                {
-                    continue;
-                }
-
-                var bombsCount = 0;
-
-                foreach (var direction in Enum.GetValues<Direction>())
-                {
-                    var neighbour = _cellsMap.GetElementNeighbour(new(x, y), direction);
-                    if (neighbour != null)
-                    {
-                        bombsCount += neighbour.HasBomb ? 1 : 0;
-                    }
-                }
-
-                cell.SetNumber(new(bombsCount));
-            }
         }
     }
 

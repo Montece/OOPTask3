@@ -2,4 +2,4 @@
 
 namespace OOPTask3.Game.States;
 
-public sealed class GameStateMachine(GameState initialState) : StateMachine<GameState>(initialState);
+public sealed class GameStateMachine(GameState initialState, List<StateView> views) : StateMachine<GameState>(initialState, views);

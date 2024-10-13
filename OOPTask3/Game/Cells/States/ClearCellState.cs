@@ -1,6 +1,6 @@
 ﻿namespace OOPTask3.Game.Cells.States;
 
-public sealed class ClearCellState : CellState
+public sealed class ClearCellState(Cell cell) : CellState(cell)
 {
     public override string Id => "Clear";
 
@@ -10,6 +10,7 @@ public sealed class ClearCellState : CellState
         "Opened"
     ];
 
-    public override CellState? PrimaryNextState => new OpenedCellState();
-    public override CellState? SecondaryNextState => new FlagCellState();
+    public override CellState PrimaryNextState => new OpenedCellState(Cell);
+    public override CellState SecondaryNextState => new FlagCellState(Cell);
+    public override char Mnemonics => ' ';
 }

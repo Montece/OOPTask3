@@ -2,6 +2,4 @@
 
 namespace OOPTask3.Game.States;
 
-public abstract class GameState : State
-{
-}
+public abstract class GameState : State;

@@ -2,7 +2,7 @@
 
 public sealed class CellNumber
 {
-    public int Value;
+    public int Value { get; }
 
     private const int MIN_VALUE = 0;
     private const int MAX_VALUE = 8;

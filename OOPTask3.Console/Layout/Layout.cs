@@ -17,6 +17,12 @@ public abstract class ConsoleLayout
         LayoutManager = layoutManager;
     }
 
+    public void ReShow()
+    {
+        Hide();
+        Show();
+    }
+
     public void Show()
     {
         System.Console.WriteLine(TITLE);

@@ -1,4 +1,5 @@
 ﻿using OOPTask3.Game.Cells.States;
+using OOPTask3.Map;
 
 namespace OOPTask3.Game.Cells;
 
@@ -6,19 +7,21 @@ public sealed class Cell
 {
     public CellState State => _cellStateMachine.CurrentState;
     public bool HasBomb { get; private set; }
-    public CellNumber? Number { get; private set; }
+    public CellsMap CellsMap { get; private set; }
+    public Point Point { get; private set; }
 
-    private CellStateMachine _cellStateMachine;
+    private readonly CellStateMachine _cellStateMachine;
 
-    public void SetNumber(CellNumber number)
+    public Cell(CellsMap cellsMap, Point point)
     {
-        Number = number;
+        CellsMap = cellsMap;
+        Point = point;
+        _cellStateMachine = new(new ClearCellState(this));
     }
 
     public void PlaceBomb()
     {
         HasBomb = true;
-        Number = null;
     }
 
     public bool ChangeStateToNextPrimary()

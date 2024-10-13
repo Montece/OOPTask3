@@ -2,14 +2,14 @@
 
 namespace OOPTask3.Map;
 
-public sealed class Map2d<T> where T : new()
+public abstract class Map2d<T>
 {
     public int Width { get; }
     public int Height { get; }
 
     private readonly T[] _elements;
 
-    public Map2d(int width, int height)
+    protected Map2d(int width, int height)
     {
         if (width < 0)
         {
@@ -35,14 +35,6 @@ public sealed class Map2d<T> where T : new()
         Height = height;
 
         _elements = new T[width * height];
-
-        for (var y = 0; y < Height; y++)
-        {
-            for (var x = 0; x < Width; x++)
-            {
-                SetElement(new(x, y), new T());
-            }
-        }
     }
 
     public T? GetElement(Point position)
