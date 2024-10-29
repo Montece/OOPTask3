@@ -14,9 +14,9 @@ public sealed class StandardRandomGenerator : IRandomGenerator
         _random = new(seed);
     }
 
-    public int GetNextRandomInt(int minInclusiveValue, int maxInclusiveValue)
+    public int GetNextRandomInt(int minInclusiveValue, int maxExclusiveValue)
     {
-        var randomElement = _random.Next(minInclusiveValue, maxInclusiveValue + 1);
+        var randomElement = _random.Next(minInclusiveValue, maxExclusiveValue);
         return randomElement;
     }
 }

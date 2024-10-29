@@ -1,4 +1,5 @@
-﻿using OOPTask3.Game.Cells;
+﻿using OOPTask3.Game;
+using OOPTask3.Game.Cells;
 using OOPTask3.Map;
 using Xunit;
 
@@ -6,15 +7,15 @@ namespace OOPTask3.Tests;
 
 public class Map2dTests
 {
-    private Map2d<Cell> InitMap(int width, int height)
+    private CellsMap InitMap(int width, int height)
     {
-        var map = new Map2d<Cell>(width, height);
+        var map = new CellsMap(width, height, []);
 
         for (var w = 0; w < map.Width; w++)
         {
             for (var h = 0; h < map.Height; h++)
             {
-                map.SetElement(new(w, h), new());
+                map.SetElement(new(w, h), new(map, new(w, h), []));
             }
         }
 
@@ -26,7 +27,7 @@ public class Map2dTests
     [InlineData(1000, 1000)]
     public void Map2d_Ctor_Success(int width, int height)
     {
-        var map = new Map2d<Cell>(width, height);
+        var map = new CellsMap(width, height, []);
 
         Assert.NotNull(map);
     }
@@ -41,41 +42,25 @@ public class Map2dTests
     [InlineData(0, 0)]
     public void Map2d_Ctor_Exception(int width, int height)
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() =>
-        {
-            var _ = new Map2d<Cell>(width, height);
-        });
+        Assert.Throws<ArgumentOutOfRangeException>(() => { _ = new CellsMap(width, height, []); });
     }
 
     [Fact]
     public void Map2d_GetElement_Correct()
     {
         var map = InitMap(10, 10);
+        var position = new Point(0, 0);
 
-        var cell = new Cell();
-        var number = CellNumber.Five;
-        cell.SetNumber(number);
-        map.SetElement(new(5, 5), cell);
-
-        cell = map.GetElement(new(5, 5));
+        var cell = new Cell(map, position, []);
+        map.SetElement(position, cell);
+        cell = map.GetElement(position);
 
         if (cell is null)
         {
             Assert.Fail("Cell is null!");
         }
 
-        Assert.Equal(number, cell.Number);
-    }
-
-
-    [Fact]
-    public void Map2d_GetElement_Null()
-    {
-        var map = new Map2d<Cell>(10, 10);
-
-        var cell = map.GetElement(new(5, 5));
-
-        Assert.Null(cell);
+        Assert.Equal(position, cell.Point);
     }
 
     [Theory]
@@ -126,11 +111,12 @@ public class Map2dTests
     public void Map2d_SetElement_SetNormalValue()
     {
         var map = InitMap(10, 10);
-        var cell = new Cell();
+        var position = new Point(3, 3);
+        var cell = new Cell(map, position, []);
 
-        map.SetElement(new(3, 3), cell);
+        map.SetElement(position, cell);
 
-        var cellFromMap = map.GetElement(new(3, 3));
+        var cellFromMap = map.GetElement(position);
 
         Assert.Equal(cell, cellFromMap);
     }
@@ -147,12 +133,11 @@ public class Map2dTests
     public void Map2d_GetElementNeighbour_Upper_Correct(Direction direction, int offsetToDirectionX, int offsetToDirectionY)
     {
         var map = InitMap(10, 10);
-        var mainCell = new Cell();
-        var directionCell = new Cell();
-
         var mainCellPosition = new Point(5, 5);
-
+        var mainCell = new Cell(map, mainCellPosition, []);
+        
         var directionCellPosition = new Point(mainCellPosition.X + offsetToDirectionX, mainCellPosition.Y + offsetToDirectionY);
+        var directionCell = new Cell(map, directionCellPosition, []);
 
         map.SetElement(mainCellPosition, mainCell);
         map.SetElement(directionCellPosition, directionCell);

@@ -6,6 +6,6 @@ public abstract class CellState(Cell cell) : State
 {
     public abstract CellState? PrimaryNextState { get; }
     public abstract CellState? SecondaryNextState { get; }
-    public Cell Cell { get; } = cell;
+    protected Cell Cell { get; } = cell;
     public abstract char Mnemonics { get; }
 }

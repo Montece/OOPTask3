@@ -12,5 +12,5 @@ public sealed class ClearCellState(Cell cell) : CellState(cell)
 
     public override CellState PrimaryNextState => new OpenedCellState(Cell);
     public override CellState SecondaryNextState => new FlagCellState(Cell);
-    public override char Mnemonics => ' ';
+    public override char Mnemonics => '*';
 }

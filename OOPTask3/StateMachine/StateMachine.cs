@@ -4,7 +4,7 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : State
 {
     public T CurrentState { get; private set; }
 
-    private Dictionary<string, StateView> _views = new();
+    private readonly Dictionary<string, StateView> _views = new();
 
     protected StateMachine(T initialState, List<StateView> views)
     {
@@ -21,7 +21,7 @@ public abstract class StateMachine<T> : IStateMachine<T> where T : State
 
     public bool ChangeStateTo(T nextState)
     {
-        if (CanChangeStateTo(nextState))
+        if (!CanChangeStateTo(nextState))
         {
             return false;
         }

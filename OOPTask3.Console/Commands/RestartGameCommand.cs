@@ -20,6 +20,13 @@ public sealed class RestartGameCommand : SimpleConsoleCommand
 
     protected override void ExecuteInternal(ConsoleLayoutContext context, string input)
     {
+        if (context is not GameLayoutContext gameContext)
+        {
+            return;
+        }
+
+        gameContext.GameLogic = null;
+
         context.ConsoleLayout?.LayoutManager.ShowLayout("Game");
     }
 }

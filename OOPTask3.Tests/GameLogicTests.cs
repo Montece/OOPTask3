@@ -1,13 +1,22 @@
-﻿using Xunit;
+﻿/*using OOPTask3.Game;
+using OOPTask3.Game.States;
+using OOPTask3.Random;
+using Xunit;
 
 namespace OOPTask3.Tests;
 
 public sealed class GameLogicTests
 {
+    public void Test()
+    {
+        var state = new RunningGameState();
+        s
+    }
+
     [Fact]
     public void GameLogic_Ctor_InitialState_Width()
     {
-        var gameLogic = new GameLogic();
+        var gameLogic = new GameLogic(new TestRandomGenerator(), [], []);
 
         Assert.Equal(0, gameLogic.Width);
     }
@@ -148,3 +157,15 @@ public sealed class GameLogicTests
         Assert.Equal(gameLogic.Width * gameLogic.Height, cells.Length);
     }
 }
+
+internal class TestRandomGenerator : IRandomGenerator
+{
+    private int _counter;
+
+    public int GetNextRandomInt(int minInclusiveValue, int maxInclusiveValue)
+    {
+        var number = _counter;
+        _counter++;
+        return number;
+    }
+}*/

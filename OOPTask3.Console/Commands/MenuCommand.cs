@@ -24,6 +24,11 @@ public sealed class MenuCommand : SimpleConsoleCommand
             return;
         }
 
+        if (context is GameLayoutContext gameContext)
+        {
+            gameContext.GameLogic = null;
+        }
+
         context.ConsoleLayout.LayoutManager.ShowLayout("Menu");
     }
 }

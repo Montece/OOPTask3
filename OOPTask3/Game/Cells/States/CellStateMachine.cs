@@ -2,7 +2,7 @@
 
 namespace OOPTask3.Game.Cells.States;
 
-public sealed class CellStateMachine(CellState initialState) : StateMachine<CellState>(initialState)
+public sealed class CellStateMachine(CellState initialState, List<StateView> views) : StateMachine<CellState>(initialState, views)
 {
     public bool ExecutePrimaryTransition()
     {

@@ -1,4 +1,5 @@
 ﻿using OOPTask3.Console.Layout.Context;
+using OOPTask3.Game.States;
 
 namespace OOPTask3.Console.Commands;
 
@@ -13,10 +14,11 @@ public sealed class OpenCellCommand(int? shortcutNumber = null) : ConsoleCommand
     {
         var parameters = input.ToLower().Replace("open cell ", string.Empty).Split(' ');
 
-        if (context is GameLayoutContext gameContext && parameters.Length == 2 && int.TryParse(parameters[0], out var x) && int.TryParse(parameters[1], out var y))
+        if (context is GameLayoutContext gameContext && gameContext.GameLogic?.CurrentState is RunningGameState running && parameters.Length == 2 && int.TryParse(parameters[0], out var x) && int.TryParse(parameters[1], out var y))
         {
-            //gameContext.GameLogic.CurrentState.ProvideInput...OpenCell(new(x, y));
-            gameContext.ConsoleLayout?.Show();
+            running.ChangeCellPrimaryState(new(x, y));
+            gameContext.GameLogic.CheckEnd();
+            gameContext.ConsoleLayout?.ReShow();
         }
     }
 }

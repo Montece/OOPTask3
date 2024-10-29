@@ -10,19 +10,46 @@ public sealed class GameLogic
 
     private readonly IRandomGenerator _randomGenerator;
     private readonly GameStateMachine _gameStateMachine;
+    private readonly List<StateView> _cellViews;
 
-    public GameLogic(IRandomGenerator randomGenerator, List<StateView> views)
+    public GameLogic(IRandomGenerator randomGenerator, List<StateView> gameViews, List<StateView> cellViews)
     {
         ArgumentNullException.ThrowIfNull(randomGenerator, nameof(randomGenerator));
 
         _randomGenerator = randomGenerator;
 
-        _gameStateMachine = new(new NotStartedGameState(), views);
+        _gameStateMachine = new(new NotStartedGameState(), gameViews);
+        _cellViews = cellViews;
     }
 
     public void Start(int width, int height, int bombsCount)
     {
-        _gameStateMachine.ChangeStateTo(new RunningGameState(width, height, bombsCount, _randomGenerator));
+        _gameStateMachine.ChangeStateTo(new RunningGameState(width, height, bombsCount, _randomGenerator, _cellViews));
+    }
+
+    public void CheckEnd()
+    {
+        if (CurrentState is not RunningGameState running)
+        {
+            return;
+        }
+
+        var cells = running.GetCells();
+        var bombIsOpen = cells.FirstOrDefault(c => c.State.Id == "Opened" && c.HasBomb) != null;
+
+        if (bombIsOpen)
+        {
+            _gameStateMachine.ChangeStateTo(new LoseGameState());
+            return;
+        }
+
+        var allBombsFound = cells.Where(c => c.HasBomb).All(c => c.State.Id == "Flag");
+        var allNotBombsOpened = cells.Where(c => !c.HasBomb).All(c => c.State.Id == "Opened");
+
+        if (allBombsFound && allNotBombsOpened)
+        {
+            _gameStateMachine.ChangeStateTo(new WinGameState());
+        }
     }
 
     public void Render()

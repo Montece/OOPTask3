@@ -1,16 +1,28 @@
-﻿using OOPTask3.Game.Cells;
+﻿using OOPTask3.Game;
+using OOPTask3.Game.Cells;
+using OOPTask3.Game.Cells.States;
+using OOPTask3.StateMachine;
 using Xunit;
 
 namespace OOPTask3.Tests;
 
 public class CellTests
 {
+    private readonly CellsMap _mockMap = new(10, 10, []);
+    private readonly List<StateView> _cellViews = [];
+
+    [Fact]
+    public void Cell_Ctor_Throw()
+    {
+        Assert.Throws<ArgumentNullException>(() => { _ = new Cell(null, null, null); });
+    }
+
     [Fact]
     public void Cell_Ctor_NoThrow()
     {
         try
         {
-            var cell = new Cell();
+            var cell = new Cell(_mockMap, new(0, 0), _cellViews);
             Assert.NotNull(cell);
         }
         catch (Exception ex)
@@ -22,7 +34,7 @@ public class CellTests
     [Fact]
     public void Cell_PlaceBomb_Success()
     {
-        var cell = new Cell();
+        var cell = new Cell(_mockMap, new(0, 0), _cellViews);
 
         var bombStateBeforePlace = cell.HasBomb;
         cell.PlaceBomb();
@@ -32,38 +44,73 @@ public class CellTests
     }
 
     [Fact]
-    public void Cell_ChangeStateTo_SuccessAllVarieties()
+    public void Cell_ChangeStateToNextPrimary_SuccessFullChain()
     {
-        var cell = new Cell();
+        var cell = new Cell(_mockMap, new(0, 0), _cellViews);
 
-        foreach (CellState targetState in Enum.GetValues(typeof(CellState)))
+        var oldState = cell.State;
+
+        if (oldState.Id != "Clear")
         {
-            var oldState = cell.State;
-            cell.ChangeStateTo(targetState);
-            var newState = cell.State;
+            Assert.Fail($"Wrong initial cell state: {oldState.Id}");
+        }
 
-            if (oldState != targetState && newState == oldState)
-            {
-                Assert.Fail($"Cannot change cell state: {oldState} -> {newState}");
-            }
+        var changeResult = cell.ChangeStateToNextPrimary();
+
+        var newState = cell.State;
+
+        if (!changeResult || newState.Id != "Opened")
+        {
+            Assert.Fail($"Cannot change cell state: {newState.Id}");
+        }
+
+        changeResult = cell.ChangeStateToNextPrimary();
+
+        newState = cell.State;
+
+        if (changeResult)
+        {
+            Assert.Fail($"Wrong change cell state: {newState.Id}");
         }
     }
 
     [Fact]
-    public void Cell_SetNumber_SuccessAllVarieties()
+    public void Cell_ChangeStateToNextSecondary_SuccessFullChain()
     {
-        var cell = new Cell();
+        var cell = new Cell(_mockMap, new(0, 0), _cellViews);
 
-        foreach (CellNumber targetNumber in Enum.GetValues(typeof(CellNumber)))
+        var oldState = cell.State;
+
+        if (oldState.Id != "Clear")
         {
-            var oldState = cell.Number;
-            cell.SetNumber(targetNumber);
-            var newState = cell.Number;
+            Assert.Fail($"Wrong initial cell state: {oldState.Id}");
+        }
 
-            if (oldState != targetNumber && newState == oldState)
-            {
-                Assert.Fail($"Cannot change cell number: {oldState} -> {newState}");
-            }
+        var changeResult = cell.ChangeStateToNextSecondary();
+
+        var newState = cell.State;
+
+        if (!changeResult || newState.Id != "Flag")
+        {
+            Assert.Fail($"Cannot change cell state: {newState.Id}");
+        }
+
+        changeResult = cell.ChangeStateToNextSecondary();
+
+        newState = cell.State;
+
+        if (!changeResult || newState.Id != "Question")
+        {
+            Assert.Fail($"Cannot change cell state: {newState.Id}");
+        }
+
+        changeResult = cell.ChangeStateToNextSecondary();
+
+        newState = cell.State;
+
+        if (!changeResult || newState.Id != "Clear")
+        {
+            Assert.Fail($"Cannot change cell state: {newState.Id}");
         }
     }
 }

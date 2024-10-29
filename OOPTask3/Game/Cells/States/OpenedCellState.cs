@@ -10,7 +10,7 @@ public sealed class OpenedCellState(Cell cell) : CellState(cell)
     public override CellState? SecondaryNextState => null;
     public override char Mnemonics => GetBombsNumber().Value.ToString().FirstOrDefault();
 
-    public CellNumber GetBombsNumber()
+    private CellNumber GetBombsNumber()
     {
         var bombsCount = 0;
 
@@ -23,6 +23,6 @@ public sealed class OpenedCellState(Cell cell) : CellState(cell)
             }
         }
 
-        return new CellNumber(bombsCount);
+        return new(bombsCount);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using OOPTask3.Console.Commands;
+using OOPTask3.Console.Layout.CellStateViews;
 using OOPTask3.Console.Layout.Context;
-using OOPTask3.Console.Layout.Views;
+using OOPTask3.Console.Layout.GameStateViews;
 using OOPTask3.Game;
 using OOPTask3.Game.Cells;
 using OOPTask3.Game.Cells.States;
@@ -44,7 +45,6 @@ public sealed class GameLayout(LayoutManager layoutManager) : ConsoleLayout(layo
         if (gameContext.GameLogic == null)
         {
             PrepareGame();
-            RenderMap();
         }
 
         gameContext.GameLogic.Render();
@@ -55,19 +55,6 @@ public sealed class GameLayout(LayoutManager layoutManager) : ConsoleLayout(layo
             {
                 case GameState.NotStarted:
                     System.Console.WriteLine("Game is not running!");
-                    break;
-                case GameState.Running:
-                    RenderMap();
-                    break;
-                case GameState.Win:
-                    RenderMap();
-                    System.Console.WriteLine("You win!");
-                    break;
-                case GameState.Lose:
-                    System.Console.WriteLine("You lose!");
-                    break;
-                default:
-                    System.Console.WriteLine("Unknown game state!");
                     break;
             }
         }
@@ -81,8 +68,6 @@ public sealed class GameLayout(LayoutManager layoutManager) : ConsoleLayout(layo
         {
             throw new WrongContextException();
         }
-
-        gameContext.GameLogic = null;
     }
 
     private void PrepareGame()
@@ -94,8 +79,22 @@ public sealed class GameLayout(LayoutManager layoutManager) : ConsoleLayout(layo
             return;
         }
         
-        gameLogic = new GameLogic(new StandardRandomGenerator(), new List<StateView> { new RunningGameStateView(gameLogic) });
-        gameLogic.Start(10, 10, 20);
+        gameLogic = new GameLogic(new StandardRandomGenerator(),
+            [
+                new NotStartedGameStateView(),
+                new RunningGameStateView(),
+                new WinGameStateView(),
+                new LoseGameStateView()
+            ],
+            [
+                new ClearCellStateView(),
+                new FlagCellStateView(),
+                new OpenedCellStateView(),
+                new QuestionCellStateView(),
+            ]);
+
+        //gameLogic.Start(10, 10, 20);
+        gameLogic.Start(3, 3, 1);
 
         SetGameLogic(gameLogic);
     }
@@ -118,11 +117,6 @@ public sealed class GameLayout(LayoutManager layoutManager) : ConsoleLayout(layo
         }
 
         gameContext.GameLogic = gameLogic;
-    }
-
-    private void RenderMap()
-    {
-        
     }
 
     protected override bool ProvideInputImpl(string input)

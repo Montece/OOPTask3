@@ -22,7 +22,7 @@ public sealed class RunningGameState : GameState
     private readonly CellsMap _cellsMap;
     private readonly IRandomGenerator _randomGenerator;
 
-    public RunningGameState(int width, int height, int bombsCount, IRandomGenerator randomGenerator)
+    public RunningGameState(int width, int height, int bombsCount, IRandomGenerator randomGenerator, List<StateView> views)
     {
         ArgumentNullException.ThrowIfNull(randomGenerator, nameof(randomGenerator));
         _randomGenerator = randomGenerator;
@@ -60,7 +60,7 @@ public sealed class RunningGameState : GameState
             throw new ArgumentOutOfRangeException(nameof(bombsCount), "Cannot be more then cells count");
         }
 
-        _cellsMap = new(Width, Height);
+        _cellsMap = new(Width, Height, views);
 
         PlaceBombs(bombsCount);
     }
@@ -135,15 +135,6 @@ public sealed class RunningGameState : GameState
         if (!result)
         {
             throw new TransitionException($"Cannot change state to next primary ({cell.State})");
-        }
-
-        if (cell.HasBomb)
-        {
-            
-        }
-        else
-        {
-            //var areBombsLeft = _cellsMap.GetElements().Where();
         }
     }
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
-using OOPTask3.GameCell;
+using OOPTask3.Game.Cells;
 
 namespace OOPTask3.WPF;
 

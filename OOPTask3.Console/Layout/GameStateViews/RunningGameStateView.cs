@@ -1,11 +1,10 @@
-﻿using OOPTask3.Game;
-using OOPTask3.Game.States;
+﻿using OOPTask3.Game.States;
 using OOPTask3.Game.Views;
 using OOPTask3.StateMachine;
 
-namespace OOPTask3.Console.Layout.Views;
+namespace OOPTask3.Console.Layout.GameStateViews;
 
-internal sealed class RunningGameStateView(GameLogic gameLogic) : GameStateView(gameLogic)
+internal sealed class RunningGameStateView : GameStateView
 {
     public override string Id => "Running";
 
@@ -39,8 +38,7 @@ internal sealed class RunningGameStateView(GameLogic gameLogic) : GameStateView(
                     }
                     else
                     {
-                        var symbol = running.GetCell(new(x, y)).State.Mnemonics;
-                        System.Console.Write(symbol);
+                        running.GetCell(new(x, y)).Render();
                     }
                 }
             }
