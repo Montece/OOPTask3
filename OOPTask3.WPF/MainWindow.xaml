@@ -4,46 +4,29 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OOPTask3.WPF"
-        mc:Ignorable="d"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Loaded="MainWindow_OnLoaded"
         Title="MainWindow" Height="450" Width="800">
 
     <Window.Resources>
         <local:CellViewModel x:Key="ViewModel"/>
-        <ItemsPanelTemplate x:Key="Sudoku.Panel">
+        <ItemsPanelTemplate x:Key="CellsPanel">
             <UniformGrid Columns="3" Rows="3"/>
         </ItemsPanelTemplate>
-        <DataTemplate x:Key="Sudoku.CellTemplate" DataType="{x:Type local:CellControl}">
-            <Border BorderBrush="SkyBlue" BorderThickness="{Binding Border}"
-                    Background="{Binding Background, ElementName=CellButton}">
-                <Border.Style>
-                    <Style>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding}" Value="{x:Null}">
-                                <Setter Property="Border.Opacity" Value="0"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Border.Style>
-                <Button x:Name="CellButton" Content="{Binding ShowValue}"
-                          FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"
-                          BorderThickness="0"/>
-            </Border>
+        <DataTemplate x:Key="CellTemplate" DataType="{x:Type local:CellControl}">
+            <Button x:Name="CellButton" Content="{Binding ShowValue}"
+                    FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Center"
+                    BorderThickness="1"
+                    PreviewMouseDown="CellButton_OnClick"/>
         </DataTemplate>
     </Window.Resources>
 
     <Grid>
         <StackPanel>
-            <Button Background="Blue" Content="1" />
-            <Button Background="White" Content="2" />
-            <UniformGrid Rows="5" Columns="5">
-                <Button Content="Left Top" />
-                <Button Content="Right Top" />
-                <Button Content="Left Bottom" />
-                <Button Content="Right Bottom" />
-            </UniformGrid>
-            <ItemsControl ItemsSource="{Binding Cells, Source={StaticResource ViewModel}}"
-                  ItemTemplate="{DynamicResource Sudoku.CellTemplate}"
-                  ItemsPanel="{DynamicResource Sudoku.Panel}"/>
+            <ItemsControl
+                ItemsSource="{Binding Cells, Source={StaticResource ViewModel}}"
+                ItemTemplate="{DynamicResource CellTemplate}"
+                ItemsPanel="{DynamicResource CellsPanel}"/>
         </StackPanel>
     </Grid>
 </Window>
