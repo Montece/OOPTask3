@@ -17,7 +17,7 @@ public sealed partial class MainWindow
 
         var viewModel = GetCellViewModel();
 
-        _gameLogic = new(new StandardRandomGenerator(100),
+        _gameLogic = new(new StandardRandomGenerator(),
         [
             new MvvmNotStartedGameStateView(viewModel),
             new MvvmRunningGameStateView(viewModel),
@@ -33,7 +33,7 @@ public sealed partial class MainWindow
 
     private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
     {
-        _gameLogic.Start(3, 3, 1);
+        _gameLogic.Start(9, 9, 10);
         _gameLogic.Render();
     }
 
