@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using OOPTask3.Game.Cells.States;
+﻿using OOPTask3.Game.Cells.States;
 using OOPTask3.Map;
 using OOPTask3.StateMachine;
 

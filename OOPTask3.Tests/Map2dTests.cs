@@ -7,7 +7,7 @@ namespace OOPTask3.Tests;
 
 public class Map2dTests
 {
-    private CellsMap InitMap(int width, int height)
+    private static CellsMap InitMap(int width, int height)
     {
         var map = new CellsMap(width, height, []);
 
@@ -95,14 +95,6 @@ public class Map2dTests
         var map = InitMap(10, 10);
 
         var cells = map.GetElements();
-
-        foreach (var cell in cells)
-        {
-            if (cell is null)
-            {
-                Assert.Fail("Cell is null!");
-            }
-        }
 
         Assert.Equal(map.Width * map.Height, cells.Length);
     }

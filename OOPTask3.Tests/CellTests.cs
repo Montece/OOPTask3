@@ -1,6 +1,5 @@
 ﻿using OOPTask3.Game;
 using OOPTask3.Game.Cells;
-using OOPTask3.Game.Cells.States;
 using OOPTask3.StateMachine;
 using Xunit;
 
@@ -14,7 +13,7 @@ public class CellTests
     [Fact]
     public void Cell_Ctor_Throw()
     {
-        Assert.Throws<ArgumentNullException>(() => { _ = new Cell(null, null, null); });
+        Assert.Throws<ArgumentNullException>(() => { _ = new Cell(null!, null!, null!); });
     }
 
     [Fact]

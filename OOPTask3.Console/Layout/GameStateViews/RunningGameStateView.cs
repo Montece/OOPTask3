@@ -38,7 +38,7 @@ internal sealed class RunningGameStateView : GameStateView
                     }
                     else
                     {
-                        running.GetCell(new(x, y)).Render();
+                        running.GetCell(new(x, y))?.Render();
                     }
                 }
             }

@@ -3,11 +3,7 @@ using OOPTask3.Console.Layout.CellStateViews;
 using OOPTask3.Console.Layout.Context;
 using OOPTask3.Console.Layout.GameStateViews;
 using OOPTask3.Game;
-using OOPTask3.Game.Cells;
-using OOPTask3.Game.Cells.States;
-using OOPTask3.Game.States;
 using OOPTask3.Random;
-using OOPTask3.StateMachine;
 
 namespace OOPTask3.Console.Layout;
 
@@ -47,24 +43,12 @@ public sealed class GameLayout(LayoutManager layoutManager) : ConsoleLayout(layo
             PrepareGame();
         }
 
-        gameContext.GameLogic.Render();
-
-        /*else
-        {
-            switch (gameContext.GameLogic.State)
-            {
-                case GameState.NotStarted:
-                    System.Console.WriteLine("Game is not running!");
-                    break;
-            }
-        }
-
-        System.Console.WriteLine();*/
+        gameContext.GameLogic?.Render();
     }
 
     protected override void HideImpl()
     {
-        if (Context is not GameLayoutContext gameContext)
+        if (Context is not GameLayoutContext)
         {
             throw new WrongContextException();
         }
@@ -79,7 +63,7 @@ public sealed class GameLayout(LayoutManager layoutManager) : ConsoleLayout(layo
             return;
         }
         
-        gameLogic = new GameLogic(new StandardRandomGenerator(),
+        gameLogic = new(new StandardRandomGenerator(),
             [
                 new NotStartedGameStateView(),
                 new RunningGameStateView(),
@@ -93,8 +77,7 @@ public sealed class GameLayout(LayoutManager layoutManager) : ConsoleLayout(layo
                 new QuestionCellStateView(),
             ]);
 
-        //gameLogic.Start(10, 10, 20);
-        gameLogic.Start(3, 3, 1);
+        gameLogic.Start(9, 9, 10);
 
         SetGameLogic(gameLogic);
     }

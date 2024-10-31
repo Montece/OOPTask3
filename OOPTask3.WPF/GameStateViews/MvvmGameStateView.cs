@@ -1,7 +1,7 @@
 ﻿using OOPTask3.Game.Views;
 using OOPTask3.StateMachine;
 
-namespace OOPTask3.WPF;
+namespace OOPTask3.WPF.GameStateViews;
 
 internal abstract class MvvmGameStateView(CellViewModel cellViewModel) : GameStateView
 {
