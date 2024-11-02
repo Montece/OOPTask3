@@ -7,6 +7,18 @@ public abstract class Map2d<T>
     public int Width { get; }
     public int Height { get; }
 
+    public Vector[] NeighbourDirections { get; } =
+    [
+        Vector.Upper,
+        Vector.Lower,
+        Vector.Right,
+        Vector.Left,
+        Vector.UpperRight,
+        Vector.LowerRight,
+        Vector.UpperLeft,
+        Vector.LowerLeft
+    ];
+
     private readonly T[] _elements;
 
     protected Map2d(int width, int height)
@@ -66,24 +78,5 @@ public abstract class Map2d<T>
     private int PositionToIndex(Point position)
     {
         return position.X + position.Y * Width;
-    }
-
-    [Pure]
-    public T? GetElementNeighbour(Point position, Direction direction)
-    {
-        var cell = direction switch
-        {
-            Direction.Upper => GetElement(new(position.X, position.Y + 1)),
-            Direction.Lower => GetElement(new(position.X, position.Y - 1)),
-            Direction.Right => GetElement(new(position.X + 1, position.Y)),
-            Direction.Left => GetElement(new(position.X - 1, position.Y)),
-            Direction.UpperRight => GetElement(new(position.X + 1, position.Y + 1)),
-            Direction.LowerRight => GetElement(new(position.X + 1, position.Y - 1)),
-            Direction.UpperLeft => GetElement(new(position.X - 1, position.Y + 1)),
-            Direction.LowerLeft => GetElement(new(position.X - 1, position.Y - 1)),
-            var _ => throw new ArgumentOutOfRangeException(nameof(direction), direction, null)
-        };
-
-        return cell;
     }
 }

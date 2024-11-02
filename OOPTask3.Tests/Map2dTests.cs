@@ -112,30 +112,4 @@ public class Map2dTests
 
         Assert.Equal(cell, cellFromMap);
     }
-
-    [Theory]
-    [InlineData(Direction.Upper, 0, 1)]
-    [InlineData(Direction.Lower, 0, -1)]
-    [InlineData(Direction.Right, 1, 0)]
-    [InlineData(Direction.Left, -1, 0)]
-    [InlineData(Direction.UpperRight, 1, 1)]
-    [InlineData(Direction.LowerRight, 1, -1)]
-    [InlineData(Direction.UpperLeft, -1, 1)]
-    [InlineData(Direction.LowerLeft, -1, -1)]
-    public void Map2d_GetElementNeighbour_Upper_Correct(Direction direction, int offsetToDirectionX, int offsetToDirectionY)
-    {
-        var map = InitMap(10, 10);
-        var mainCellPosition = new Point(5, 5);
-        var mainCell = new Cell(map, mainCellPosition, []);
-        
-        var directionCellPosition = new Point(mainCellPosition.X + offsetToDirectionX, mainCellPosition.Y + offsetToDirectionY);
-        var directionCell = new Cell(map, directionCellPosition, []);
-
-        map.SetElement(mainCellPosition, mainCell);
-        map.SetElement(directionCellPosition, directionCell);
-
-        var tryGetDirectionCell = map.GetElementNeighbour(mainCellPosition, direction);
-
-        Assert.Equal(directionCell, tryGetDirectionCell);
-    }
 }

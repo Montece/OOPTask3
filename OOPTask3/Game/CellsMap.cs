@@ -13,7 +13,7 @@ public sealed class CellsMap : Map2d<Cell>
             for (var x = 0; x < Width; x++)
             {
                 var point = new Point(x, y);
-                SetElement(point, new Cell(this, point, views));
+                SetElement(point, new(this, point, views));
             }
         }
     }

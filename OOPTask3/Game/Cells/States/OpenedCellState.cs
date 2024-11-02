@@ -14,9 +14,12 @@ public sealed class OpenedCellState(Cell cell) : CellState(cell)
     {
         var bombsCount = 0;
 
-        foreach (var direction in Enum.GetValues<Direction>())
+        foreach (var direction in Cell.CellsMap.NeighbourDirections)
         {
-            var neighbour = Cell.CellsMap.GetElementNeighbour(Cell.Point, direction);
+            var position = Cell.Point;
+            var neighbourPosition = new Point(position.X + direction.X, position.Y + direction.Y);
+            var neighbour = Cell.CellsMap.GetElement(neighbourPosition);
+
             if (neighbour != null)
             {
                 bombsCount += neighbour.HasBomb ? 1 : 0;
