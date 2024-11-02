@@ -1,5 +1,4 @@
-﻿using System.Xml.Serialization;
-using OOPTask3.Game.Cells;
+﻿using OOPTask3.Game.Cells;
 using OOPTask3.Map;
 using OOPTask3.Random;
 using OOPTask3.StateMachine;

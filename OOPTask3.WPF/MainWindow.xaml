@@ -6,17 +6,18 @@
         xmlns:local="clr-namespace:OOPTask3.WPF"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         Loaded="MainWindow_OnLoaded"
-        Title="MainWindow" Height="450" Width="800">
+        Title="OOPTask3" Height="350" Width="300">
 
     <Window.Resources>
         <local:CellViewModel x:Key="ViewModel"/>
         <ItemsPanelTemplate x:Key="CellsPanel">
-            <UniformGrid Columns="3" Rows="3"/>
+            <UniformGrid/>
         </ItemsPanelTemplate>
         <DataTemplate x:Key="CellTemplate" DataType="{x:Type local:CellControl}">
             <Button x:Name="CellButton" Content="{Binding ShowValue}"
-                    FontSize="10" VerticalAlignment="Center" HorizontalAlignment="Center"
+                    FontSize="10" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                     BorderThickness="1"
+                    Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
                     PreviewMouseDown="CellButton_OnClick"/>
         </DataTemplate>
     </Window.Resources>

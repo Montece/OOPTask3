@@ -1,5 +1,4 @@
-﻿using OOPTask3.Game;
-using OOPTask3.Game.Cells;
+﻿using OOPTask3.Game.Cells;
 using OOPTask3.StateMachine;
 using Xunit;
 
@@ -7,7 +6,6 @@ namespace OOPTask3.Tests;
 
 public class CellTests
 {
-    private readonly CellsMap _mockMap = new(10, 10, []);
     private readonly List<StateView> _cellViews = [];
 
     [Fact]

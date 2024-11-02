@@ -19,6 +19,7 @@ public sealed class Cell
         ArgumentNullException.ThrowIfNull(views);
 
         Point = point;
+        BombsCount = new(0);
         _cellStateMachine = new(new ClearCellState(this), views);
     }
 
