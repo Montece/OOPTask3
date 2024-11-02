@@ -1,4 +1,5 @@
-﻿using OOPTask3.Game.Cells;
+﻿using System.Xml.Serialization;
+using OOPTask3.Game.Cells;
 using OOPTask3.Map;
 using OOPTask3.Random;
 using OOPTask3.StateMachine;
@@ -101,6 +102,16 @@ public sealed class RunningGameState : GameState
             }
 
             availablePositions.Remove(bombPosition);
+        }
+
+        for (var x = 0; x < Width; x++)
+        {
+            for (var y = 0; y < Height; y++)
+            {
+                var position = new Point(x, y);
+                var cell = _cellsMap.GetElement(position);
+                cell?.SetBombsCount(_cellsMap.CalculateBombsNumber(position));
+            }
         }
     }
 

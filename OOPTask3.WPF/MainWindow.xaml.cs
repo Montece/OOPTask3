@@ -3,6 +3,7 @@ using OOPTask3.Random;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using OOPTask3.Game.States;
 using OOPTask3.WPF.GameStateViews;
 
 namespace OOPTask3.WPF;
@@ -63,10 +64,15 @@ public sealed partial class MainWindow
             return;
         }
 
+        if (_gameLogic.CurrentState is not RunningGameState runningGameState)
+        {
+            return;
+        }
+
         _gameLogic.CheckEnd();
         _gameLogic.Render();
 
-        var index = cellControl.Value.Point.X + cellControl.Value.Point.Y * cellControl.Value.CellsMap.Width;
+        var index = cellControl.Value.Point.X + cellControl.Value.Point.Y * runningGameState.Width;
         var viewModel = GetCellViewModel();
         viewModel.Cells[index] = null;
         viewModel.Cells[index] = cellControl;

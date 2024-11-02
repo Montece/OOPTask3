@@ -15,7 +15,7 @@ public class Map2dTests
         {
             for (var h = 0; h < map.Height; h++)
             {
-                map.SetElement(new(w, h), new(map, new(w, h), []));
+                map.SetElement(new(w, h), new(new(w, h), []));
             }
         }
 
@@ -51,7 +51,7 @@ public class Map2dTests
         var map = InitMap(10, 10);
         var position = new Point(0, 0);
 
-        var cell = new Cell(map, position, []);
+        var cell = new Cell(position, []);
         map.SetElement(position, cell);
         cell = map.GetElement(position);
 
@@ -104,7 +104,7 @@ public class Map2dTests
     {
         var map = InitMap(10, 10);
         var position = new Point(3, 3);
-        var cell = new Cell(map, position, []);
+        var cell = new Cell(position, []);
 
         map.SetElement(position, cell);
 

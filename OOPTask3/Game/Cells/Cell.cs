@@ -8,18 +8,16 @@ public sealed class Cell
 {
     public CellState State => _cellStateMachine.CurrentState;
     public bool HasBomb { get; private set; }
-    public CellsMap CellsMap { get; private set; }
+    public CellNumber BombsCount { get; private set; }
     public Point Point { get; private set; }
 
     private readonly CellStateMachine _cellStateMachine;
 
-    public Cell(CellsMap cellsMap, Point point, List<StateView> views)
+    public Cell(Point point, List<StateView> views)
     {
-        ArgumentNullException.ThrowIfNull(cellsMap);
         ArgumentNullException.ThrowIfNull(point);
         ArgumentNullException.ThrowIfNull(views);
 
-        CellsMap = cellsMap;
         Point = point;
         _cellStateMachine = new(new ClearCellState(this), views);
     }
@@ -42,5 +40,10 @@ public sealed class Cell
     public void Render()
     {
         _cellStateMachine.Render();
+    }
+
+    public void SetBombsCount(CellNumber bombsCount)
+    {
+        BombsCount = bombsCount;
     }
 }

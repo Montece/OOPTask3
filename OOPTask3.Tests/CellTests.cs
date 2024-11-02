@@ -13,7 +13,7 @@ public class CellTests
     [Fact]
     public void Cell_Ctor_Throw()
     {
-        Assert.Throws<ArgumentNullException>(() => { _ = new Cell(null!, null!, null!); });
+        Assert.Throws<ArgumentNullException>(() => { _ = new Cell(null!, null!); });
     }
 
     [Fact]
@@ -21,7 +21,7 @@ public class CellTests
     {
         try
         {
-            var cell = new Cell(_mockMap, new(0, 0), _cellViews);
+            var cell = new Cell(new(0, 0), _cellViews);
             Assert.NotNull(cell);
         }
         catch (Exception ex)
@@ -33,7 +33,7 @@ public class CellTests
     [Fact]
     public void Cell_PlaceBomb_Success()
     {
-        var cell = new Cell(_mockMap, new(0, 0), _cellViews);
+        var cell = new Cell(new(0, 0), _cellViews);
 
         var bombStateBeforePlace = cell.HasBomb;
         cell.PlaceBomb();
@@ -45,7 +45,7 @@ public class CellTests
     [Fact]
     public void Cell_ChangeStateToNextPrimary_SuccessFullChain()
     {
-        var cell = new Cell(_mockMap, new(0, 0), _cellViews);
+        var cell = new Cell(new(0, 0), _cellViews);
 
         var oldState = cell.State;
 
@@ -76,7 +76,7 @@ public class CellTests
     [Fact]
     public void Cell_ChangeStateToNextSecondary_SuccessFullChain()
     {
-        var cell = new Cell(_mockMap, new(0, 0), _cellViews);
+        var cell = new Cell(new(0, 0), _cellViews);
 
         var oldState = cell.State;
 
