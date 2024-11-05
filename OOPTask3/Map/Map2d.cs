@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Collections.Immutable;
+using JetBrains.Annotations;
 
 namespace OOPTask3.Map;
 
@@ -7,7 +8,7 @@ public abstract class Map2d<T>
     public int Width { get; }
     public int Height { get; }
 
-    public Vector[] NeighbourDirections { get; } =
+    protected readonly ImmutableArray<Vector> NeighbourDirections =
     [
         Vector.Upper,
         Vector.Lower,
