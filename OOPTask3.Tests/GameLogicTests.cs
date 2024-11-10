@@ -70,7 +70,7 @@ public sealed class GameLogicTests
         var runningGame = gameLogic.CurrentState as RunningGameState;
 
         Assert.NotNull(runningGame);
-        Assert.Equal(11, runningGame.Height);
+        Assert.Equal(11, runningGame.GetCells().Count(c => c.HasBomb));
     }
 
     [Theory]
