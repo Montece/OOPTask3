@@ -15,6 +15,8 @@ public sealed class GameLogic
     public GameLogic(IRandomGenerator randomGenerator, List<StateView> gameViews, List<StateView> cellViews)
     {
         ArgumentNullException.ThrowIfNull(randomGenerator, nameof(randomGenerator));
+        ArgumentNullException.ThrowIfNull(gameViews, nameof(gameViews));
+        ArgumentNullException.ThrowIfNull(cellViews, nameof(cellViews));
 
         _randomGenerator = randomGenerator;
 

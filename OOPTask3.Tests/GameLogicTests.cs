@@ -1,4 +1,4 @@
-﻿/*using OOPTask3.Game;
+﻿using OOPTask3.Game;
 using OOPTask3.Game.States;
 using OOPTask3.Random;
 using Xunit;
@@ -7,83 +7,70 @@ namespace OOPTask3.Tests;
 
 public sealed class GameLogicTests
 {
-    public void Test()
+    private const int RANDOM_SEED = 100;
+
+    private GameLogic CreateGameLogic()
     {
-        var state = new RunningGameState();
-        s
+        var gameLogic = new GameLogic(new StandardRandomGenerator(RANDOM_SEED), [], []);
+
+        return gameLogic;
     }
 
     [Fact]
-    public void GameLogic_Ctor_InitialState_Width()
+    public void GameLogic_State_NotStarted()
     {
-        var gameLogic = new GameLogic(new TestRandomGenerator(), [], []);
+        var gameLogic = CreateGameLogic();
 
-        Assert.Equal(0, gameLogic.Width);
+        var gameState = gameLogic.CurrentState as NotStartedGameState;
+
+        Assert.NotNull(gameState);
     }
 
     [Fact]
-    public void GameLogic_Ctor_InitialState_Height()
+    public void GameLogic_State_Running()
     {
-        var gameLogic = new GameLogic();
+        var gameLogic = CreateGameLogic();
+        gameLogic.Start(9, 10, 11);
 
-        Assert.Equal(0, gameLogic.Height);
+        var runningGame = gameLogic.CurrentState as RunningGameState;
+
+        Assert.NotNull(runningGame);
     }
 
-    [Fact]
-    public void GameLogic_Ctor_InitialState_MaxBombsCount()
-    {
-        var gameLogic = new GameLogic();
-
-        Assert.Equal(0, gameLogic.MaxBombsCount);
-    }
-
-    [Fact]
-    public void GameLogic_Ctor_InitialState_State()
-    {
-        var gameLogic = new GameLogic();
-
-        Assert.Equal(GameState.NotStarted, gameLogic.State);
-    }
-    
     [Fact]
     public void GameLogic_Start_Width()
     {
-        var gameLogic = new GameLogic();
-        gameLogic.Start(10, 15, 20);
-        
-        Assert.Equal(10, gameLogic.Width);
+        var gameLogic = CreateGameLogic();
+        gameLogic.Start(9, 10, 11);
+
+        var runningGame = gameLogic.CurrentState as RunningGameState;
+
+        Assert.NotNull(runningGame);
+        Assert.Equal(9, runningGame.Width);
     }
 
     [Fact]
     public void GameLogic_Start_Height()
     {
-        var gameLogic = new GameLogic();
-        gameLogic.Start(10, 15, 20);
+        var gameLogic = CreateGameLogic();
+        gameLogic.Start(9, 10, 11);
 
-        Assert.Equal(15, gameLogic.Height);
+        var runningGame = gameLogic.CurrentState as RunningGameState;
+
+        Assert.NotNull(runningGame);
+        Assert.Equal(10, runningGame.Height);
     }
 
     [Fact]
     public void GameLogic_Start_MaxBombsCount()
     {
-        var gameLogic = new GameLogic();
-        gameLogic.Start(10, 15, 20);
+        var gameLogic = CreateGameLogic();
+        gameLogic.Start(9, 10, 11);
 
-        Assert.Equal(gameLogic.Width * gameLogic.Height, gameLogic.MaxBombsCount);
-    }
+        var runningGame = gameLogic.CurrentState as RunningGameState;
 
-    [Theory]
-    [InlineData(7, 9)]
-    [InlineData(3, 2)]
-    [InlineData(0, 0)]
-    [InlineData(9, 14)]
-    public void GameLogic_Start_RandomCellCheck(int x, int y)
-    {
-        var gameLogic = new GameLogic();
-        gameLogic.Start(10, 15, 20);
-        var cell = gameLogic.GetCell(new(x, y));
-
-        Assert.NotNull(cell);
+        Assert.NotNull(runningGame);
+        Assert.Equal(11, runningGame.Height);
     }
 
     [Theory]
@@ -94,10 +81,11 @@ public sealed class GameLogicTests
     [InlineData(20)]
     public void GameLogic_Start_CurrentBombsCount_Correct(int maxBombsCount)
     {
-        var gameLogic = new GameLogic();
+        var gameLogic = CreateGameLogic();
         gameLogic.Start(10, 15, maxBombsCount);
 
-        var cells = gameLogic.GetCells();
+        var runningGame = gameLogic.CurrentState as RunningGameState;
+        var cells = runningGame.GetCells();
 
         if (cells is null)
         {
@@ -125,7 +113,7 @@ public sealed class GameLogicTests
     [InlineData(200)]
     public void GameLogic_Start_CurrentBombsCount_Incorrect(int maxBombsCount)
     {
-        var gameLogic = new GameLogic();
+        var gameLogic = CreateGameLogic();
 
         Assert.Throws<ArgumentOutOfRangeException>(() =>
         {
@@ -136,10 +124,11 @@ public sealed class GameLogicTests
     [Fact]
     public void Map2d_GetElements_Correct()
     {
-        var gameLogic = new GameLogic();
+        var gameLogic = CreateGameLogic();
         gameLogic.Start(10, 15, 20);
 
-        var cells = gameLogic.GetCells();
+        var runningGame = gameLogic.CurrentState as RunningGameState;
+        var cells = runningGame.GetCells();
 
         if (cells is null)
         {
@@ -154,18 +143,6 @@ public sealed class GameLogicTests
             }
         }
 
-        Assert.Equal(gameLogic.Width * gameLogic.Height, cells.Length);
+        Assert.Equal(runningGame.Width * runningGame.Height, cells.Length);
     }
 }
-
-internal class TestRandomGenerator : IRandomGenerator
-{
-    private int _counter;
-
-    public int GetNextRandomInt(int minInclusiveValue, int maxInclusiveValue)
-    {
-        var number = _counter;
-        _counter++;
-        return number;
-    }
-}*/

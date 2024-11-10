@@ -10,14 +10,14 @@ public abstract class Map2d<T>
 
     protected readonly ImmutableArray<Vector> NeighbourDirections =
     [
-        Vector.Upper,
-        Vector.Lower,
+        Vector.Up,
+        Vector.Down,
         Vector.Right,
         Vector.Left,
-        Vector.UpperRight,
-        Vector.LowerRight,
-        Vector.UpperLeft,
-        Vector.LowerLeft
+        Vector.UpRight,
+        Vector.DownRight,
+        Vector.UpLeft,
+        Vector.DownLeft
     ];
 
     private readonly T[] _elements;
@@ -26,12 +26,12 @@ public abstract class Map2d<T>
     {
         if (width < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(width), "Cannot be less then 0");
+            throw new ArgumentOutOfRangeException(nameof(width), "Should be less than 0");
         }
 
         if (height < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(height), "Cannot be less then 0");
+            throw new ArgumentOutOfRangeException(nameof(height), "Should be less than 0");
         }
 
         if (width == 0)

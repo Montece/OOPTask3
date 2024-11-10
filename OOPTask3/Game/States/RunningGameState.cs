@@ -15,50 +15,42 @@ public sealed class RunningGameState : GameState
         "Lose"
     ];
 
-    public int Width { get; private set; }
-    public int Height { get; private set; }
-    public int MaxBombsCount => Width * Height;
+    public int Width { get; }
+    public int Height { get; }
+    private int MaxBombsCount => Width * Height;
 
     private readonly CellsMap _cellsMap;
     private readonly IRandomGenerator _randomGenerator;
 
     public RunningGameState(int width, int height, int bombsCount, IRandomGenerator randomGenerator, List<StateView> views)
     {
-        ArgumentNullException.ThrowIfNull(randomGenerator, nameof(randomGenerator));
-        _randomGenerator = randomGenerator;
-
         if (width < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(width), "Cannot be less then 0");
+            throw new ArgumentOutOfRangeException(nameof(width), "Should be less than 0");
         }
 
         if (height < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(height), "Cannot be less then 0");
+            throw new ArgumentOutOfRangeException(nameof(height), "Should be less than 0");
         }
 
         if (width == 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(width), "Cannot equals 0");
+            throw new ArgumentOutOfRangeException(nameof(width), "Should be equal 0");
         }
 
         if (height == 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(height), "Cannot equals 0");
+            throw new ArgumentOutOfRangeException(nameof(height), "Should be equal 0");
         }
 
         Width = width;
         Height = height;
 
-        if (bombsCount < 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(bombsCount), "Cannot be less then 0");
-        }
+        ArgumentNullException.ThrowIfNull(randomGenerator, nameof(randomGenerator));
+        ArgumentNullException.ThrowIfNull(views, nameof(views));
 
-        if (bombsCount > MaxBombsCount)
-        {
-            throw new ArgumentOutOfRangeException(nameof(bombsCount), "Cannot be more then cells count");
-        }
+        _randomGenerator = randomGenerator;
 
         _cellsMap = new(Width, Height, views);
 
@@ -69,12 +61,12 @@ public sealed class RunningGameState : GameState
     {
         if (bombsCount < 0)
         {
-            throw new ArgumentOutOfRangeException(nameof(bombsCount), "Cannot be less then 0");
+            throw new ArgumentOutOfRangeException(nameof(bombsCount), "Should be less than 0");
         }
 
         if (bombsCount > MaxBombsCount)
         {
-            throw new ArgumentOutOfRangeException(nameof(bombsCount), "Cannot be more then cells count");
+            throw new ArgumentOutOfRangeException(nameof(bombsCount), "Should be more than cells count");
         }
 
         var currentBombsCount = bombsCount;

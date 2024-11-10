@@ -11,12 +11,12 @@ public sealed class CellNumber
     {
         if (value < MIN_VALUE)
         {
-            throw new ArgumentOutOfRangeException(nameof(value), $"Cannot be less then {MIN_VALUE}");
+            throw new ArgumentOutOfRangeException(nameof(value), $"Should be less than {MIN_VALUE}");
         }
 
         if (value > MAX_VALUE)
         {
-            throw new ArgumentOutOfRangeException(nameof(value), $"Cannot be more then {MAX_VALUE}");
+            throw new ArgumentOutOfRangeException(nameof(value), $"Should be more than {MAX_VALUE}");
         }
 
         Value = value;
